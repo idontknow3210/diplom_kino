@@ -438,6 +438,7 @@ input[type='radio'], input[type='submit'], button, .conf-step__header, select {
   width: calc(1440px * 0.5); }
 
 .conf-step__seances-movie {
+  cursor: pointer;
   height: 40px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   box-sizing: border-box;

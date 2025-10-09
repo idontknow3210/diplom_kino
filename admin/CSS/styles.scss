@@ -598,6 +598,7 @@ input[type='radio'], input[type='submit'], button, .conf-step__header, select {
 }
 
 .conf-step__seances-movie {
+  cursor: pointer;
   height: 40px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   box-sizing: border-box;

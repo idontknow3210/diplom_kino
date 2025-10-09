@@ -3,10 +3,10 @@ header('Access-Control-Allow-Origin: *');
 header('Content-Type: text/html; charset=utf-8');
 header('Access-Control-Allow-Headers: Content-Type');
 
+if(isset($_GET['email'])) {
+  $password = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/pass/password.json'));
 
-if($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-  if($_POST['email']==='aaa@aaa.ru' && $_POST['password']==='1') {
+  if($_GET['email']==='aaa@aaa.ru' && password_verify($_GET['password'], $password)) {
     header("Location: http://localhost:8000/php/admin.php");
   } else {
     echo 'Error password or email';
@@ -52,7 +52,9 @@ echo '<!DOCTYPE html>
             <input value="Авторизоваться" type="submit" class="login__button">
           </div>
         </form>
+        <div style="color: red; text-align: center;"></div>
       </div>
+      
     </section>
   </main>
   <script>
@@ -65,11 +67,14 @@ function ReplaceContent(newContent) {
 form.addEventListener("submit", (e)=>{
     e.preventDefault();
     const formData = new FormData(form);
-    fetch("http://localhost:8000", {
-        method: "POST",
-        body: formData
-    }).then(response => response.text()).then(data=>{
-        ReplaceContent(data);
+    const params = new URLSearchParams(formData).toString();
+    
+    fetch(`http://localhost:8000?${params}`).then(response => response.text()).then(data=>{
+        if(data==="Error password or email") {
+            document.querySelector(".login__wrapper").children[1].innerHTML=data;    
+        } else {
+            ReplaceContent(data); 
+        }
     });
 });
   </script>

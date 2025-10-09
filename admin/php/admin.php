@@ -285,7 +285,6 @@ echo '<!DOCTYPE html>
         
         <fieldset class="conf-step__buttons text-center">
           <button class="conf-step__button conf-step__button-accent">Добавить сеанс</button>
-          <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">
         </fieldset>  
       </div>
     </section>
@@ -296,7 +295,7 @@ echo '<!DOCTYPE html>
       </header>
       <div class="conf-step__wrapper text-center">
         <p class="conf-step__paragraph">Всё готово, теперь можно:</p>
-        <button class="conf-step__button conf-step__button-accent">Открыть продажу билетов</button>
+        <button class="conf-step__button conf-step__button-accent"><a href="http://localhost:8001/">Открыть продажу билетов<a/></button>
       </div>
     </section>    
   </main>
