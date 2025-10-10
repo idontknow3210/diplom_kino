@@ -5,7 +5,7 @@ $data = '';
 foreach (json_decode($json, true) as $k=>$v) {
     $data.= "$k: $v; ";
 }
-header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: http://localhost:8001');
 header('Content-Type: image/x-png');
 header('Access-Control-Allow-Headers: Content-Type');
 

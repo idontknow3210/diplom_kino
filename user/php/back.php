@@ -1,5 +1,5 @@
 <?php
-header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: http://localhost:8000');
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Headers: Content-Type');
 
@@ -16,7 +16,10 @@ if($jsonData[0]==='price') {
 } else if($jsonData[0]==='deleteSeance') {
     foreach($seances[$jsonData[1]][$jsonData[2]] as $key=>$value) {
       if($value===$jsonData[3]) {
+        $way = mb_substr($jsonData[2], -1);
+        $time = str_replace(':', '_', $jsonData[3]);
         unset($seances[$jsonData[1]][$jsonData[2]][$key]);
+        unlink($_SERVER['DOCUMENT_ROOT'] . '/buySeances/chairsHall' . $way . '_' . $time . '.json');
         if(count($seances[$jsonData[1]][$jsonData[2]])===0) {
           unset($seances[$jsonData[1]][$jsonData[2]]);
         }
@@ -30,6 +33,15 @@ if($jsonData[0]==='price') {
     unset($films[$jsonData[1]]);
     file_put_contents($address . '/seance.json', json_encode($seances, JSON_UNESCAPED_UNICODE));
     file_put_contents($address . '/infofilm.json', json_encode($films, JSON_UNESCAPED_UNICODE));
-    
+} else if($jsonData[0]==='deleteHall') {
+    $way = mb_substr($jsonData[1], -1);
+    unlink($_SERVER['DOCUMENT_ROOT'] . '\JSON\price\priceHall' . $way . '.json');
+    unlink($_SERVER['DOCUMENT_ROOT'] . '\JSON\halls\chairsHall' . $way . '.json');
+    array_map('unlink', glob($_SERVER['DOCUMENT_ROOT'] . '/buySeances/chairsHall' . $way . "*.json"));
+    foreach($seances as $key=>$value) {
+      unset($seances[$key][$jsonData[1]]);
+    }
+    file_put_contents($address . '/seance.json', json_encode($seances, JSON_UNESCAPED_UNICODE));
+
 }
 

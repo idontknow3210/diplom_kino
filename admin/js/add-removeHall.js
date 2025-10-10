@@ -35,6 +35,13 @@ function deleteHall() {
       popupRemoveHall.querySelector('.conf-step__button-accent').addEventListener('click', (e) => {
         e.preventDefault();
         popupRemoveHall.classList.toggle('active');
+        fetch('http://localhost:8001/php/back.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(['deleteHall', el.parentNode.textContent])
+        });
         el.parentNode.remove();
         hallsSessionGrid.children[id].remove();
         reloadConfigurations();
