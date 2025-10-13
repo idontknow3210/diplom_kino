@@ -5,15 +5,22 @@ const addingHall = popupHall.querySelector(".conf-step__button-accent");
 
 const hallsSessionGrid = document.querySelector('.conf-step__seances');// Работает так же в файле sessionGrid
 
+const popupSelectOptions = ['Зал 1', 'Зал 2', 'Зал 3', 'Зал 4', 'Зал 5', 'Зал 6', 'Зал 7', 'Зал 8', 'Зал 9'];
 createHall.addEventListener('click', () => {
   popupHall.classList.toggle('active');
+  popupHall.querySelector('.conf-step__input').innerHTML = ``;
+  let check = popupSelectOptions;
+  Array.from(halls.children).forEach(el => {
+      check = check.filter(e => e !== el.textContent);
+  });
+  check.forEach(el => {
+    popupHall.querySelector('.conf-step__input').innerHTML += `<option value="${el}">${el}</option>`;
+  });
 });
 
 const halls = document.querySelector('.conf-step__list');
 const popupRemoveHall = document.querySelector('#removeHall');
 const configurationsHallsPrice = document.querySelectorAll('.conf-step__selectors-box');
-
-
 
 function reloadConfigurations() {
   let configurations = ``;
@@ -36,21 +43,21 @@ function deleteHall() {
         e.preventDefault();
         popupRemoveHall.classList.toggle('active');
         fetch('http://localhost:8001/php/back.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(['deleteHall', el.parentNode.textContent])
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body: JSON.stringify(['deleteHall', el.parentNode.textContent])
         });
         el.parentNode.remove();
         hallsSessionGrid.children[id].remove();
         reloadConfigurations();
         fetch('http://localhost:8000/php/backAdmin.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(['halls', halls.innerHTML, configurationsHallsPrice[0].innerHTML, hallsSessionGrid.innerHTML])
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body: JSON.stringify(['halls', halls.innerHTML, configurationsHallsPrice[0].innerHTML, hallsSessionGrid.innerHTML])
         });
       }, { once: true });
 
@@ -67,11 +74,11 @@ addingHall.addEventListener('click', (e) => {
   hallsSessionGrid.innerHTML += `<div class="conf-step__seances-hall"><h3 class="conf-step__seances-title">${popupHall.querySelector('.conf-step__input').value}</h3><div class="conf-step__seances-timeline"></div></div>`;
   reloadConfigurations();
   fetch('http://localhost:8000/php/backAdmin.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(['halls', halls.innerHTML, configurationsHallsPrice[0].innerHTML, hallsSessionGrid.innerHTML])
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(['halls', halls.innerHTML, configurationsHallsPrice[0].innerHTML, hallsSessionGrid.innerHTML])
   });
   deleteHall();
 });

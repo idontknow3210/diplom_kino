@@ -35,9 +35,9 @@ echo '<!DOCTYPE html>
         </div>
         <div class="popup__wrapper">
           <form action="add_hall" method="post" accept-charset="utf-8">
-            <label class="conf-step__label conf-step__label-fullsize" for="name">
+            <label class="conf-step__label conf-step__label-fullsize">
               Название зала
-              <input class="conf-step__input" type="text" placeholder="Например, &laquo;Зал 1&raquo;" name="name" required>
+              <select class="conf-step__input" name="name" autocomplete="off" required></select>
             </label>
             <div class="conf-step__buttons text-center">
               <input type="submit" value="Добавить зал" class="conf-step__button conf-step__button-accent" data-event="hall_add">
