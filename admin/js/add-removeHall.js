@@ -34,7 +34,7 @@ function reloadConfigurations() {
 }
 
 function deleteHall() {
-  Array.from(halls.querySelectorAll('.conf-step__button-trash')).forEach((el, id) => {
+  Array.from(halls.querySelectorAll('.conf-step__button-trash')).forEach((el) => {
     el.addEventListener('click', () => {
       console.log("hi");
       popupRemoveHall.classList.toggle('active');
@@ -49,8 +49,12 @@ function deleteHall() {
           },
           body: JSON.stringify(['deleteHall', el.parentNode.textContent])
         });
+        Array.from(hallsSessionGrid.children).forEach(numberHall=>{
+          if(numberHall.children[0].textContent===el.parentNode.textContent) {
+            numberHall.remove();
+          }
+        });
         el.parentNode.remove();
-        hallsSessionGrid.children[id].remove();
         reloadConfigurations();
         fetch('http://localhost:8000/php/backAdmin.php', {
           method: 'POST',
