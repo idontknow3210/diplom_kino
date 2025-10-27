@@ -69,7 +69,7 @@ echo '<!DOCTYPE html>
                 </label>
                 <label class="conf-step__label conf-step__label-fullsize" for="name">
                   Продолжительность фильма (мин.)
-                  <input class="conf-step__input" type="text"  name="duration" data-last-value="" required>
+                  <input class="conf-step__input" type="number"  name="duration" data-last-value="" required>
                 </label>
                 <label class="conf-step__label conf-step__label-fullsize" for="name">
                   Описание фильма
@@ -81,7 +81,7 @@ echo '<!DOCTYPE html>
                 </label>
                 <label class="conf-step__label conf-step__label-fullsize" for="name">
                   Постер фильма
-                  <input class="conf-step__input" type="file"  name="file" data-last-value="" required>
+                  <input class="conf-step__input" type="file" name="file" accept=".png, .jpg, .jpeg" required>
                 </label>
               </div>
             </div>

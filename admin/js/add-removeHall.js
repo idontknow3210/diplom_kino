@@ -11,7 +11,7 @@ createHall.addEventListener('click', () => {
   popupHall.querySelector('.conf-step__input').innerHTML = ``;
   let check = popupSelectOptions;
   Array.from(halls.children).forEach(el => {
-      check = check.filter(e => e !== el.textContent);
+    check = check.filter(e => e !== el.textContent);
   });
   check.forEach(el => {
     popupHall.querySelector('.conf-step__input').innerHTML += `<option value="${el}">${el}</option>`;
@@ -22,6 +22,13 @@ const halls = document.querySelector('.conf-step__list');
 const popupRemoveHall = document.querySelector('#removeHall');
 const configurationsHallsPrice = document.querySelectorAll('.conf-step__selectors-box');
 
+function reloadNameConfHalls() {
+  Array.from(configurationsHallsPrice[1].children).forEach(hallPrise => {
+    hallPrise.children[0].setAttribute("name", "chairs-price");
+  });
+}
+reloadNameConfHalls();
+
 function reloadConfigurations() {
   let configurations = ``;
   Array.from(halls.children).forEach((el) => {
@@ -31,6 +38,7 @@ function reloadConfigurations() {
   })
   configurationsHallsPrice[0].innerHTML = configurations;
   configurationsHallsPrice[1].innerHTML = configurations;
+  reloadNameConfHalls();
 }
 
 function deleteHall() {
@@ -49,8 +57,8 @@ function deleteHall() {
           },
           body: JSON.stringify(['deleteHall', el.parentNode.textContent])
         });
-        Array.from(hallsSessionGrid.children).forEach(numberHall=>{
-          if(numberHall.children[0].textContent===el.parentNode.textContent) {
+        Array.from(hallsSessionGrid.children).forEach(numberHall => {
+          if (numberHall.children[0].textContent === el.parentNode.textContent) {
             numberHall.remove();
           }
         });

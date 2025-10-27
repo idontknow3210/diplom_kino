@@ -5,9 +5,15 @@ const rows = document.querySelector('#rows');
 
 
 rows.addEventListener('change', () => {
-    confStepHall.innerHTML=``;
+    confStepHall.innerHTML = ``;
+    let sumChairs = '';
+    if (!isNaN(+chairs.value) && chairs.value > 0) {
+        for (let i = 0; i < chairs.value; i++) {
+            sumChairs+='<span class="conf-step__chair conf-step__chair_standart"></span>';
+        }
+    }
     for (let i = 0; i < rows.value; i++) {
-        confStepHall.appendChild(confStepRow[0].cloneNode(true));
+        confStepHall.innerHTML+=`<div class="conf-step__row">${sumChairs}</div>`;
     }
     restartFor();
 });
@@ -20,7 +26,7 @@ chairs.addEventListener('change', () => {
         }
     });
     restartFor();
-    
+
 });
 
 const typeChairs = [document.querySelector('#standart'), document.querySelector('#vip'), document.querySelector('#disabled')];
@@ -43,6 +49,6 @@ function restartFor() {
     });
 }
 restartFor();
-    
+
 
 

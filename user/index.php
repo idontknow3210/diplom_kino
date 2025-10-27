@@ -33,7 +33,7 @@ foreach($frontInfofilm as $key=>$value) {
           <h2 class="movie__title">' . $key . '</h2>
           <p class="movie__synopsis">' . $frontInfofilm[$key]['description'] . '</p>
           <p class="movie__data">
-            <span class="movie__data-duration">' . $frontInfofilm[$key]['duration'] . '</span>
+            <span class="movie__data-duration">' . $frontInfofilm[$key]['duration'] . ' мин</span>
             <span class="movie__data-origin">' . $frontInfofilm[$key]['country'] . '</span>
           </p>
         </div>

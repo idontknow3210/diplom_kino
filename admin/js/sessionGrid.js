@@ -35,37 +35,44 @@ seanceActive();
 filmForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = new FormData(filmForm);
-    console.log(formData)
     const filmInput = [];
     for (let el of formData) {
         filmInput.push(el[1]);
     }
     film.classList.remove('active');
-    fetch('http://localhost:8000/php/backAdmin.php', {
-        method: 'POST',
-        body: formData
-    }).then(response => {
-        if (response.ok) {
-            confStepMovies.innerHTML += `<div class="conf-step__movie">
+    let img = new Image();
+    img.src = URL.createObjectURL(filmInput[4]);
+    let infoImage;
+    img.onload = function () { infoImage = true };
+    img.onerror = function () { infoImage = false };
+    if (infoImage) {
+        fetch('http://localhost:8000/php/backAdmin.php', {
+            method: 'POST',
+            body: formData
+        }).then(response => {
+            if (response.ok) {
+                confStepMovies.innerHTML += `<div class="conf-step__movie">
             <img class="conf-step__movie-poster" alt="poster" src="http://localhost:8000/i/posters/${filmInput[4].name}">
             <h3 class="conf-step__movie-title">${filmInput[0]}</h3>
             <p class="conf-step__movie-duration">${filmInput[1]}</p>
           </div>`;
-            seanceActive();
-            activeDeleteFilm();
-            fetch('http://localhost:8000/php/backAdmin.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify(['films', confStepMovies.innerHTML])
-            }).then(res => console.log(res.ok));
-            fetch('http://localhost:8001/php/film.php', {
-                method: 'POST',
-                body: formData
-            });
-        }
-    });
+                seanceActive();
+                activeDeleteFilm();
+                fetch('http://localhost:8000/php/backAdmin.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(['films', confStepMovies.innerHTML])
+                }).then(res => console.log(res.ok));
+                fetch('http://localhost:8001/php/film.php', {
+                    method: 'POST',
+                    body: formData
+                });
+            }
+        });
+    }
+
 });
 let startMovie = [];
 function selectedSort(arr) {
@@ -122,7 +129,7 @@ function activeDeleteFilm() {
 }
 activeDeleteFilm();
 
-function deleteFilmSeance(deleteAny, name, namehall=null, time=null, image=null) {
+function deleteFilmSeance(deleteAny, name, namehall = null, time = null, image = null) {
     fetch('http://localhost:8001/php/back.php', {
         method: 'POST',
         headers: {
@@ -156,7 +163,7 @@ removeFilm.querySelector('.conf-step__button-accent').addEventListener('click', 
     }).then(res => console.log(res.ok));
     reloadRSeanse();
     removeFilm.classList.remove('active');
-    
+
 
 });
 
@@ -192,34 +199,44 @@ seanceForm.addEventListener('submit', (e) => {
     for (let el of formData) {
         seanceInput.push(el[1]);
     }
+    let infoSeanceTime = true;
     confStepHalls.forEach(el => {
         if (el.children[0].textContent === seanceInput[0]) {
-            el.children[1].innerHTML +=
-                `<div class="conf-step__seances-movie" style="width: 60px; background-color: rgb(133, 255, 137); left: 60px;">
-                <p class="conf-step__seances-movie-title">${seanceInput[1]}</p>
-                <p class="conf-step__seances-movie-start">${seanceInput[2]}</p>
-            </div>`;
             Array.from(el.children[1].children).forEach(elem => {
-                startMovie.push(elem);
+                if (elem.children[1].textContent === seanceInput[2]) {
+                    infoSeanceTime = false;
+                }
             });
-            selectedSort(startMovie);
+            if (infoSeanceTime) {
+                el.children[1].innerHTML += `<div class="conf-step__seances-movie" style="width: 60px; background-color: rgb(133, 255, 137); left: 60px;">
+                  <p class="conf-step__seances-movie-title">${seanceInput[1]}</p>
+                  <p class="conf-step__seances-movie-start">${seanceInput[2]}</p>
+                </div>`;
+                Array.from(el.children[1].children).forEach(elem => {
+                    startMovie.push(elem);
+                });
+                selectedSort(startMovie);
 
-            el.children[1].innerHTML = ``;
+                el.children[1].innerHTML = ``;
 
-            startMovie.forEach((element) => {
-                el.children[1].innerHTML += `<div class="conf-step__seances-movie" style="width: 60px;">${element.innerHTML}</div>`;
-            });
+                startMovie.forEach((element) => {
+                    el.children[1].innerHTML += `<div class="conf-step__seances-movie" style="width: 60px;">${element.innerHTML}</div>`;
+                });
 
-            createBackgroundColor(el.querySelectorAll('.conf-step__seances-movie-title'));
-            activeDeleteSeance(el.children[1].children);
+                createBackgroundColor(el.querySelectorAll('.conf-step__seances-movie-title'));
+                activeDeleteSeance(el.children[1].children);
+            } else {
+                alert('В этом зале уже есть такое время!');
+            }
         }
         startMovie = [];
         seance.classList.remove('active');
     });
-    reloadRSeanse();
-    fetch('http://localhost:8001/php/film.php', {
-        method: 'POST',
-        body: formData
-    }).then(response => console.log(response.ok));
-
+    if (infoSeanceTime) {
+        reloadRSeanse();
+        fetch('http://localhost:8001/php/film.php', {
+            method: 'POST',
+            body: formData
+        }).then(response => console.log(response.ok));
+    }
 });
