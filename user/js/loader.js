@@ -1,10 +1,19 @@
 const seance = document.querySelectorAll('.movie-seances__time');
+const days = document.querySelectorAll('.page-nav__day');
+let day = '31';
+days.forEach(el => {
+  el.addEventListener('click', () => {
+    days.forEach(e => e.classList.remove('page-nav__day_chosen'));
+    el.classList.add('page-nav__day_chosen');
+    day = el.children[1].textContent;
+  });
+});
 
 seance.forEach(el => {
   el.addEventListener('click', (e) => {
     e.preventDefault();
     const nameFilm = el.parentNode.parentNode.parentNode.parentNode.children[0].children[1].children[0].textContent;
-    const hallTimeChairs = { hall: el.parentNode.parentNode.previousElementSibling.textContent, time: el.textContent };
+    const hallTimeChairs = { hall: el.parentNode.parentNode.previousElementSibling.textContent, time: el.textContent, day: day };
     const params = new URLSearchParams(hallTimeChairs).toString();
     fetch(`http://localhost:8001/php/hall.php?${params}`).then(response => response.json()).then(data => {
       const arrData = JSON.parse(JSON.stringify(data));

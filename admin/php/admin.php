@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 header('Access-Control-Allow-Origin: http://localhost:8000');
 header('Content-Type: text/html; charset=utf-8');
 header('Access-Control-Allow-Headers: Content-Type');

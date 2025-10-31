@@ -40,22 +40,21 @@ filmForm.addEventListener('submit', (e) => {
         filmInput.push(el[1]);
     }
     film.classList.remove('active');
-    let img = new Image();
+
+    img = new Image();
     img.src = URL.createObjectURL(filmInput[4]);
-    let infoImage;
-    img.onload = function () { infoImage = true };
-    img.onerror = function () { infoImage = false };
-    if (infoImage) {
+    img.onload = function () {
+        console.log('info go')
         fetch('http://localhost:8000/php/backAdmin.php', {
             method: 'POST',
             body: formData
         }).then(response => {
             if (response.ok) {
                 confStepMovies.innerHTML += `<div class="conf-step__movie">
-            <img class="conf-step__movie-poster" alt="poster" src="http://localhost:8000/i/posters/${filmInput[4].name}">
-            <h3 class="conf-step__movie-title">${filmInput[0]}</h3>
-            <p class="conf-step__movie-duration">${filmInput[1]}</p>
-          </div>`;
+                <img class="conf-step__movie-poster" alt="poster" src="http://localhost:8000/i/posters/${filmInput[4].name}">
+                <h3 class="conf-step__movie-title">${filmInput[0]}</h3>
+                <p class="conf-step__movie-duration">${filmInput[1]}</p>
+            </div>`;
                 seanceActive();
                 activeDeleteFilm();
                 fetch('http://localhost:8000/php/backAdmin.php', {
@@ -71,7 +70,11 @@ filmForm.addEventListener('submit', (e) => {
                 });
             }
         });
-    }
+    };
+    img.onerror = function () {
+        alert('Не установлено изображение');
+    };
+
 
 });
 let startMovie = [];

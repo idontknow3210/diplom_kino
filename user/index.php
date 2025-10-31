@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 header('Access-Control-Allow-Origin: http://localhost:8001');
 header('Content-Type: text/html; charset=utf-8');
 header('Access-Control-Allow-Headers: Content-Type');
@@ -61,13 +62,13 @@ echo '<!DOCTYPE html>
   </header>
   
   <nav class="page-nav">
-    <a class="page-nav__day page-nav__day_today" href="#">
+    <a class="page-nav__day page-nav__day_today page-nav__day_chosen" href="#">
       <span class="page-nav__day-week">Пн</span><span class="page-nav__day-number">31</span>
     </a>
     <a class="page-nav__day" href="#">
       <span class="page-nav__day-week">Вт</span><span class="page-nav__day-number">1</span>
     </a>
-    <a class="page-nav__day page-nav__day_chosen" href="#">
+    <a class="page-nav__day" href="#">
       <span class="page-nav__day-week">Ср</span><span class="page-nav__day-number">2</span>
     </a>
     <a class="page-nav__day" href="#">
@@ -79,7 +80,8 @@ echo '<!DOCTYPE html>
     <a class="page-nav__day page-nav__day_weekend" href="#">
       <span class="page-nav__day-week">Сб</span><span class="page-nav__day-number">5</span>
     </a>
-    <a class="page-nav__day page-nav__day_next" href="#">
+    <a class="page-nav__day page-nav__day_weekend" href="#">
+      <span class="page-nav__day-week">Вс</span><span class="page-nav__day-number">6</span>
     </a>
   </nav>
   

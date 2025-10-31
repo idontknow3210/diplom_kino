@@ -4,12 +4,12 @@ header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Headers: Content-Type');
 $address = $_SERVER['DOCUMENT_ROOT'] . '/films';
 if(isset($_POST['duration'])) {
-    $dataFilm = [$_POST['name']=>['duration'=>$_POST['duration'], 'description'=>$_POST['description'], 'country'=>$_POST['country'], 'image'=>'http://localhost:8001/i/' . $_FILES['file']['name']]];
+    $dataFilm = [$_POST['name']=>['duration'=>$_POST['duration'], 'description'=>$_POST['description'], 'country'=>$_POST['country'], 'image'=>'http://localhost:8001/i/posters/' . $_FILES['file']['name']]];
     if(!file_exists($address . '/infofilm.json') || filesize($address . '/infofilm.json') == 0) {
         file_put_contents($address . '/infofilm.json', json_encode($dataFilm, JSON_UNESCAPED_UNICODE));
     } else {
         $dataFilm = json_decode(file_get_contents($address . '/infofilm.json'), true);
-        $dataFilm[$_POST['name']] = ['duration'=>$_POST['duration'], 'description'=>$_POST['description'], 'country'=>$_POST['country'], 'image'=>'http://localhost:8001/i/' . $_FILES['file']['name']];
+        $dataFilm[$_POST['name']] = ['duration'=>$_POST['duration'], 'description'=>$_POST['description'], 'country'=>$_POST['country'], 'image'=>'http://localhost:8001/i/posters/' . $_FILES['file']['name']];
         file_put_contents($address . '/infofilm.json', json_encode($dataFilm, JSON_UNESCAPED_UNICODE));
     }
     if (!file_exists($_SERVER['DOCUMENT_ROOT'] . '/i/posters/' . $_FILES['file']['name'])) {
