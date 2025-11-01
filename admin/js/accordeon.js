@@ -15,3 +15,10 @@ Array.from(popupAll).forEach(el => {
     el.classList.remove('active');
   });
 });
+confStepAll[4].children[1].children[1].addEventListener('click', () => {
+  if (confStepAll[4].children[1].children[1].textContent === 'Открыть продажу билетов') {
+    confStepAll[4].children[1].children[1].textContent = 'Приостановить продажу билетов';
+  } else if (confStepAll[4].children[1].children[1].textContent === 'Приостановить продажу билетов') {
+    confStepAll[4].children[1].children[1].textContent = 'Открыть продажу билетов';
+  }
+});

@@ -296,7 +296,7 @@ echo '<!DOCTYPE html>
       </header>
       <div class="conf-step__wrapper text-center">
         <p class="conf-step__paragraph">Всё готово, теперь можно:</p>
-        <a href="http://localhost:8001/"><button class="conf-step__button conf-step__button-accent">Открыть продажу билетов</button><a/>
+        <button class="conf-step__button conf-step__button-accent">Открыть продажу билетов</button>
       </div>
     </section>    
   </main>
