@@ -4,10 +4,10 @@ header('Access-Control-Allow-Origin: http://localhost:8000');
 header('Content-Type: text/html; charset=utf-8');
 header('Access-Control-Allow-Headers: Content-Type');
 
-if(isset($_GET['email'])) {
+if(isset($_POST['email'])) {
   $password = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/pass/password.json'));
 
-  if($_GET['email']==='aaa@aaa.ru' && password_verify($_GET['password'], $password)) {
+  if($_POST['email']==='aaa@aaa.ru' && password_verify($_POST['password'], $password)) {
     header("Location: http://localhost:8000/php/admin.php");
   } else {
     echo 'Error password or email';
@@ -68,9 +68,11 @@ function ReplaceContent(newContent) {
 form.addEventListener("submit", (e)=>{
     e.preventDefault();
     const formData = new FormData(form);
-    const params = new URLSearchParams(formData).toString();
     
-    fetch(`http://localhost:8000?${params}`).then(response => response.text()).then(data=>{
+    fetch(`http://localhost:8000`, {
+      method: "POST",
+      body: formData
+    }).then(response => response.text()).then(data=>{
         if(data==="Error password or email") {
             document.querySelector(".login__wrapper").children[1].innerHTML=data;    
         } else {
