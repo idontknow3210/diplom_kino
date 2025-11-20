@@ -22,3 +22,4 @@ confStepAll[4].children[1].children[1].addEventListener('click', () => {
     confStepAll[4].children[1].children[1].textContent = 'Открыть продажу билетов';
   }
 });
+

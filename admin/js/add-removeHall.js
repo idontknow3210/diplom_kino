@@ -21,7 +21,14 @@ createHall.addEventListener('click', () => {
 const halls = document.querySelector('.conf-step__list');
 const popupRemoveHall = document.querySelector('#removeHall');
 const configurationsHallsPrice = document.querySelectorAll('.conf-step__selectors-box');
-
+function chairsReloadAll() {
+    Array.from(configurationsHallsPrice[0].children).forEach(el => {
+        el.addEventListener('click', () => {
+            const params = new URLSearchParams({ hall: el.querySelector('.conf-step__radio').value }).toString();
+            fetch(`http://localhost:8000/php/backAdmin.php?${params}`).then(response => response.text()).then(data => confStepHall.innerHTML = data);
+        });
+    });
+}
 function reloadNameConfHalls() {
   Array.from(configurationsHallsPrice[1].children).forEach(hallPrise => {
     hallPrise.children[0].setAttribute("name", "chairs-price");
@@ -38,6 +45,7 @@ function reloadConfigurations() {
   })
   configurationsHallsPrice[0].innerHTML = configurations;
   configurationsHallsPrice[1].innerHTML = configurations;
+  chairsReloadAll()
   reloadNameConfHalls();
 }
 
