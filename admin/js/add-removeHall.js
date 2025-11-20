@@ -45,7 +45,7 @@ function reloadConfigurations() {
   })
   configurationsHallsPrice[0].innerHTML = configurations;
   configurationsHallsPrice[1].innerHTML = configurations;
-  chairsReloadAll()
+  chairsReloadAll();
   reloadNameConfHalls();
 }
 
