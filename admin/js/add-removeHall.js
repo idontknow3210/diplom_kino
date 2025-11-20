@@ -25,10 +25,14 @@ function chairsReloadAll() {
   Array.from(configurationsHallsPrice[0].children).forEach(el => {
     el.addEventListener('click', () => {
       const params = new URLSearchParams({ hall: el.querySelector('.conf-step__radio').value }).toString();
-      fetch(`http://localhost:8000/php/backAdmin.php?${params}`).then(response => response.text()).then(data => confStepHall.innerHTML = data);
+      fetch(`http://localhost:8000/php/backAdmin.php?${params}`).then(response => response.text()).then(data => {
+        confStepHall.innerHTML = data;
+        restartFor();
+      });
     });
   });
 }
+
 function reloadNameConfHalls() {
   Array.from(configurationsHallsPrice[1].children).forEach(hallPrise => {
     hallPrise.children[0].setAttribute("name", "chairs-price");

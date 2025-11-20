@@ -19,6 +19,7 @@ rows.addEventListener('change', () => {
 });
 
 chairs.addEventListener('change', () => {
+    confStepRow = document.querySelectorAll('.conf-step__row');
     confStepRow.forEach((el) => {
         el.innerHTML = ``;
         for (let i = 0; i < chairs.value; i++) {
