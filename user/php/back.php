@@ -19,7 +19,8 @@ if($jsonData[0]==='price') {
         $way = mb_substr($jsonData[2], -1);
         $time = str_replace(':', '_', $jsonData[3]);
         unset($seances[$jsonData[1]][$jsonData[2]][$key]);
-        unlink($_SERVER['DOCUMENT_ROOT'] . '/buySeances/chairsHall' . $way . '_' . $time . '.json');
+        array_map('unlink', glob($_SERVER['DOCUMENT_ROOT'] . '/buySeances' . "/day*" . '/chairsHall' . $way . '_' . $time . '.json'));
+        // unlink($_SERVER['DOCUMENT_ROOT'] . '/buySeances/chairsHall' . $way . '_' . $time . '.json');
         if(count($seances[$jsonData[1]][$jsonData[2]])===0) {
           unset($seances[$jsonData[1]][$jsonData[2]]);
         }
@@ -29,6 +30,13 @@ if($jsonData[0]==='price') {
 } else if($jsonData[0]==='deletefilm') {
     $films = json_decode(file_get_contents($address . '/infofilm.json'), true);
     unlink($_SERVER['DOCUMENT_ROOT'] .  '/i/posters/' . $jsonData[4]);
+    foreach($seances[$jsonData[1]] as $k=>$v) {
+      for($i=0;$i<count($v);$i++) {
+        $way=mb_substr($k, -1);
+        $time=str_replace(':', '_', $v[$i]);
+        array_map('unlink', glob($_SERVER['DOCUMENT_ROOT'] . '/buySeances' . "/day*" . '/chairsHall' . $way . '_' . $time . '.json'));
+      }
+    }
     unset($seances[$jsonData[1]]);
     unset($films[$jsonData[1]]);
     file_put_contents($address . '/seance.json', json_encode($seances, JSON_UNESCAPED_UNICODE));
@@ -37,7 +45,7 @@ if($jsonData[0]==='price') {
     $way = mb_substr($jsonData[1], -1);
     unlink($_SERVER['DOCUMENT_ROOT'] . '\JSON\price\priceHall' . $way . '.json');
     unlink($_SERVER['DOCUMENT_ROOT'] . '\JSON\halls\chairsHall' . $way . '.json');
-    array_map('unlink', glob($_SERVER['DOCUMENT_ROOT'] . '/buySeances/chairsHall' . $way . "*.json"));
+    array_map('unlink', glob($_SERVER['DOCUMENT_ROOT'] . '/buySeances' . "/day*" . '/chairsHall' . $way . "*.json"));
     foreach($seances as $key=>$value) {
       unset($seances[$key][$jsonData[1]]);
     }
