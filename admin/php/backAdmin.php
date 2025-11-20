@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 header('Access-Control-Allow-Origin: http://localhost:8000');
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Headers: Content-Type');
@@ -8,6 +9,9 @@ if('halls'===$html[0]) {
     file_put_contents($_SERVER['DOCUMENT_ROOT'] . '\HTML\hallsSection.json', json_encode($html[2]));
     file_put_contents($_SERVER['DOCUMENT_ROOT'] . '\HTML\hallsSeance.json', json_encode($html[3]));
 
+} else if(isset($_GET['hall'])) {
+    $way = mb_substr($_GET['hall'], -1);
+    echo json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\JSON\halls\chairsHall' . $way . '.json'));
 } else if (isset($_FILES['file'])) {
     move_uploaded_file($_FILES['file']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/i/posters/' . $_FILES['file']['name']);
 } else if ('films'===$html[0] || 'removefilms'===$html[0]) {
@@ -17,4 +21,7 @@ if('halls'===$html[0]) {
     } 
 } else if ('seances'===$html[0]) {
     file_put_contents($_SERVER['DOCUMENT_ROOT'] . '\HTML\hallsSeance.json', json_encode($html[1]));
-} 
+} else if ($html[0]==='chairs') {  
+    $way = mb_substr($html[1], -1);
+    file_put_contents($_SERVER['DOCUMENT_ROOT'] . '\JSON\halls\chairsHall' . $way . '.json', json_encode($html[2]));
+}

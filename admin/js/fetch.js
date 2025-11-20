@@ -1,4 +1,10 @@
 const buttonConfChair = confStepAll[1].querySelector('fieldset').children[0];
+Array.from(configurationsHallsPrice[0].children).forEach(el=>{
+    el.addEventListener('click', ()=>{
+        const params = new URLSearchParams({hall: el.querySelector('.conf-step__radio').value}).toString();
+        fetch(`http://localhost:8000/php/backAdmin.php?${params}`).then(response=>response.text()).then(data=>confStepHall.innerHTML=data);
+    });
+});
 buttonConfChair.addEventListener('click', () => {
     const typechairs = confStepHall.innerHTML;
     console.log('one')
@@ -14,6 +20,13 @@ buttonConfChair.addEventListener('click', () => {
                 body: JSON.stringify(numberHall)
             }).then(response => {
                 if (response.ok) {
+                    fetch('http://localhost:8000/php/backAdmin.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8'
+                        },
+                        body: JSON.stringify(numberHall)
+                    });
                     buttonConfChair.nextElementSibling.textContent = numberHall[1] + ': типы и порядок мест изменены!';
                 }
             });

@@ -238,7 +238,7 @@ echo '<!DOCTYPE html>
         </div>  
         
         <div class="conf-step__hall">
-          <div class="conf-step__hall-wrapper">' . $chairsHall . '</div>  
+          <div class="conf-step__hall-wrapper">' . '</div>  
         </div>
         
         <fieldset class="conf-step__buttons text-center">
