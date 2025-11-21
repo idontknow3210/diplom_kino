@@ -10,7 +10,7 @@
 
 **Админка**
 
-login: aaa@aaa.ru
+login: www@www.ru
 
 password: 12345
 

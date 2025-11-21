@@ -7,7 +7,7 @@ header('Access-Control-Allow-Headers: Content-Type');
 if(isset($_POST['email'])) {
   $password = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/pass/password.json'));
 
-  if($_POST['email']==='aaa@aaa.ru' && password_verify($_POST['password'], $password)) {
+  if($_POST['email']==='www@www.ru' && password_verify($_POST['password'], $password)) {
     header("Location: http://localhost:8000/php/admin.php");
   } else {
     echo 'Error password or email';
