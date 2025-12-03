@@ -13,6 +13,7 @@ if($jsonData[0]==='price') {
 } else if($jsonData[0]==='chairs') {  
     $way = mb_substr($jsonData[1], -1);
     file_put_contents($_SERVER['DOCUMENT_ROOT'] . '\JSON\halls\chairsHall' . $way . '.json', json_encode($jsonData[2]));
+    array_map('unlink', glob($_SERVER['DOCUMENT_ROOT'] . '/buySeances' . "/day*" . '/chairsHall' . $way . "*.json"));
 } else if($jsonData[0]==='deleteSeance') {
     foreach($seances[$jsonData[1]][$jsonData[2]] as $key=>$value) {
       if($value===$jsonData[3]) {

@@ -191,7 +191,12 @@ removeSeance.querySelector('.conf-step__button-accent').addEventListener('click'
     removeSeance.classList.remove('active');
     reloadRSeanse();
 });
-
+function inMinutes(str) {
+    let min = str.replace(':', '');
+    min = min.split('');
+    let result = (+(min[0] + min[1]) * 60) + +(min[2] + min[3]);
+    return result;
+}
 const seanceForm = seance.querySelector('form');
 seanceForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -203,6 +208,7 @@ seanceForm.addEventListener('submit', (e) => {
         seanceInput.push(el[1]);
     }
     let infoSeanceTime = true;
+    let timeOk = false;
     confStepHalls.forEach(el => {
         if (el.children[0].textContent === seanceInput[0]) {
             Array.from(el.children[1].children).forEach(elem => {
@@ -225,9 +231,42 @@ seanceForm.addEventListener('submit', (e) => {
                 startMovie.forEach((element) => {
                     el.children[1].innerHTML += `<div class="conf-step__seances-movie" style="width: 60px;">${element.innerHTML}</div>`;
                 });
+                let nameSean = null;
+                Array.from(el.children[1].children).forEach(nameS => {
+                    if (nameS.children[1].textContent === seanceInput[2]) {
+                        nameSean = nameS;
+                        const previousEl = nameS.previousElementSibling;
+                        const nextEl = nameS.nextElementSibling;
+                        let elTime = null;
+                        let previousElTime = null;
+                        if (previousEl !== null && nextEl !== null || previousEl !== null || nextEl !== null) {
+                            Array.from(confStepMovies.children).forEach(movie => {
+                                if (seanceInput[1] === movie.children[1].textContent) {
+                                    elTime = movie.children[2].textContent;
+                                }
+                                if (previousEl !== null && movie.children[1].textContent === previousEl.children[0].textContent) {
+                                    previousElTime = movie.children[2].textContent;
+                                }
+                            });
+                            let nextTime = nextEl !== null ? inMinutes(nextEl.children[1].textContent) : Infinity;
+                            let previousTime = previousEl !== null ? inMinutes(previousEl.children[1].textContent) + +previousElTime : null;
+                            let thisTime = [inMinutes(nameS.children[1].textContent), (inMinutes(nameS.children[1].textContent) + +elTime)];
+                            if (previousTime < (thisTime[0] + 1) && (thisTime[1] - 1) < nextTime) {
+                                timeOk = true;
+                            }
 
+                            // ПРОВЕРИТЬ ______
+                        }
+                    }
+
+                });
+                if (!timeOk) {
+                    nameSean.remove();
+                    alert('Сеанс накладывается на другой сеанс!');   
+                } 
                 createBackgroundColor(el.querySelectorAll('.conf-step__seances-movie-title'));
                 activeDeleteSeance(el.children[1].children);
+                
             } else {
                 alert('В этом зале уже есть такое время!');
             }
@@ -235,7 +274,7 @@ seanceForm.addEventListener('submit', (e) => {
         startMovie = [];
         seance.classList.remove('active');
     });
-    if (infoSeanceTime) {
+    if (timeOk) {
         reloadRSeanse();
         fetch('http://localhost:8001/php/film.php', {
             method: 'POST',

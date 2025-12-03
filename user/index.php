@@ -6,6 +6,8 @@ header('Access-Control-Allow-Headers: Content-Type');
 
 $frontSeances = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/films/seance.json'), true);
 $frontInfofilm = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/films/infofilm.json'), true);
+$controlSeance = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/controler/controler.json'));
+
 
 $result = '';
 foreach($frontInfofilm as $key=>$value) {
@@ -24,7 +26,9 @@ foreach($frontInfofilm as $key=>$value) {
           <ul class="movie-seances__list">' . $timeFilm . '</ul>
         </div>';
   }
-  
+  if (intval($controlSeance)===2) {
+    $frontHalls = '<div class="movie-seances__hall"><h3 class="movie-seances__hall-title">Продажа билетов закрыта</h3></div>';
+  }
   $result.='<section class="movie">
       <div class="movie__info">
         <div class="movie__poster">

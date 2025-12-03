@@ -9,6 +9,13 @@ $hallsSection = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\HTML
 $hallsSeance = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\HTML\hallsSeance.json'));
 $films = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\HTML\films.json'));
 $chairsHall = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\HTML\chairsHall.json'));
+$controlSeance = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/controler/controler.json'));
+$sales = 'Открыть продажу билетов';
+if (intval($controlSeance)===1) {
+  $sales = 'Приостановить продажу билетов';
+} else if (intval($controlSeance)===2) {
+  $sales = 'Открыть продажу билетов';
+}
 
 echo '<!DOCTYPE html>
 <html lang="ru">
@@ -296,7 +303,7 @@ echo '<!DOCTYPE html>
       </header>
       <div class="conf-step__wrapper text-center">
         <p class="conf-step__paragraph">Всё готово, теперь можно:</p>
-        <button class="conf-step__button conf-step__button-accent">Открыть продажу билетов</button>
+        <button class="conf-step__button conf-step__button-accent">' . $sales . '</button>
       </div>
     </section>    
   </main>

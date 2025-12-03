@@ -2,7 +2,7 @@ const buttonConfChair = confStepAll[1].querySelector('fieldset').children[0];
 chairsReloadAll();
 buttonConfChair.addEventListener('click', () => {
     const typechairs = confStepHall.innerHTML;
-    console.log('one')
+    console.log('one');
     Array.from(configurationsHallsPrice[0].children).forEach(el => {
 
         if (el.querySelector('.conf-step__radio').checked) {
