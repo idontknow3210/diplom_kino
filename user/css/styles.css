@@ -22,6 +22,7 @@ body {
 }
 
 .page-header__title {
+  cursor: pointer;
   margin: 0;
   font-weight: 900;
   font-size: 3.4rem;
