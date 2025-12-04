@@ -5,7 +5,7 @@ buttonConfChair.addEventListener('click', () => {
     console.log('one');
     Array.from(configurationsHallsPrice[0].children).forEach(el => {
 
-        if (el.querySelector('.conf-step__radio').checked) {
+        if (el.querySelector('.conf-step__radio').checked && confStepHall.children[0] !== undefined) {
             const numberHall = ['chairs', el.querySelector('.conf-step__radio').value, typechairs];
             fetch('http://localhost:8001/php/back.php', {
                 method: 'POST',
@@ -25,6 +25,8 @@ buttonConfChair.addEventListener('click', () => {
                     buttonConfChair.nextElementSibling.textContent = numberHall[1] + ': типы и порядок мест изменены!';
                 }
             });
+        } else {
+            buttonConfChair.nextElementSibling.textContent = 'Не выбран зал и(или) мест в зале недостаточно!';
         }
     });
 
@@ -38,12 +40,15 @@ class PriceHall {
 }
 
 buttonConfPrice.addEventListener('click', () => {
-    let priceHalls;
+    let priceHalls = false;
     let numberPriceHall = null;
+    let arrPrice = new PriceHall(confStepAll[2].querySelector('.conf-step__chair_vip').previousElementSibling.children[0].value, confStepAll[2].querySelector('.conf-step__chair_standart').previousElementSibling.children[0].value);
     Array.from(configurationsHallsPrice[1].children).forEach(el => {
-        if (el.querySelector('.conf-step__radio').checked) {
+        if (el.querySelector('.conf-step__radio').checked && +arrPrice[0] > 0 && +arrPrice[1] > 0) {
             numberPriceHall = el.querySelector('.conf-step__radio').value;
-            priceHalls = ['price', numberPriceHall, new PriceHall(confStepAll[2].querySelector('.conf-step__chair_vip').previousElementSibling.children[0].value, confStepAll[2].querySelector('.conf-step__chair_standart').previousElementSibling.children[0].value)];
+            priceHalls = ['price', numberPriceHall, arrPrice];
+        } else {
+            buttonConfPrice.nextElementSibling.textContent = 'Не выбран зал и(или) цены не могут быть равны или ниже нуля!';
         }
     });
     if (priceHalls) {
