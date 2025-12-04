@@ -18,7 +18,7 @@ seance.forEach(el => {
     fetch(`http://localhost:8001/php/hall.php?${params}`).then(response => response.json()).then(data => {
       const arrData = JSON.parse(JSON.stringify(data));
       document.querySelector('body').innerHTML = `<header class="page-header">
-        <h1 class="page-header__title">Идём<span>в</span>кино</h1>
+        <h1 onclick="window.location.reload()" class="page-header__title">Идём<span>в</span>кино</h1>
       </header>
       <main>
         <section class="buying">
@@ -88,7 +88,7 @@ seance.forEach(el => {
           });
           const chairsTaken = chairs.innerHTML;
           document.querySelector('body').innerHTML = `<header class="page-header">
-            <h1 class="page-header__title">Идём<span>в</span>кино</h1>
+            <h1 onclick="window.location.reload()" class="page-header__title">Идём<span>в</span>кино</h1>
           </header>
           <main>
             <section class="ticket">
@@ -134,7 +134,7 @@ seance.forEach(el => {
                   body: JSON.stringify(dataQR)
                 }).then(response => response.blob()).then(qr => {
                   document.querySelector('body').innerHTML = `<header class="page-header">
-                      <h1 class="page-header__title">Идём<span>в</span>кино</h1>
+                      <h1 onclick="window.location.reload()" class="page-header__title">Идём<span>в</span>кино</h1>
                     </header>
                     
                     <main>

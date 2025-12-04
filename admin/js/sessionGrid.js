@@ -39,41 +39,44 @@ filmForm.addEventListener('submit', (e) => {
     for (let el of formData) {
         filmInput.push(el[1]);
     }
-    film.classList.remove('active');
+    if (+filmInput[1] > 0) {
 
-    img = new Image();
-    img.src = URL.createObjectURL(filmInput[4]);
-    img.onload = function () {
-        console.log('info go')
-        fetch('http://localhost:8000/php/backAdmin.php', {
-            method: 'POST',
-            body: formData
-        }).then(response => {
-            if (response.ok) {
-                confStepMovies.innerHTML += `<div class="conf-step__movie">
+        img = new Image();
+        img.src = URL.createObjectURL(filmInput[4]);
+        img.onload = function () {
+            film.classList.remove('active');
+            fetch('http://localhost:8000/php/backAdmin.php', {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    confStepMovies.innerHTML += `<div class="conf-step__movie">
                 <img class="conf-step__movie-poster" alt="poster" src="http://localhost:8000/i/posters/${filmInput[4].name}">
                 <h3 class="conf-step__movie-title">${filmInput[0]}</h3>
                 <p class="conf-step__movie-duration">${filmInput[1]}</p>
             </div>`;
-                seanceActive();
-                activeDeleteFilm();
-                fetch('http://localhost:8000/php/backAdmin.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json;charset=utf-8'
-                    },
-                    body: JSON.stringify(['films', confStepMovies.innerHTML])
-                }).then(res => console.log(res.ok));
-                fetch('http://localhost:8001/php/film.php', {
-                    method: 'POST',
-                    body: formData
-                });
-            }
-        });
-    };
-    img.onerror = function () {
-        alert('Не установлено изображение');
-    };
+                    seanceActive();
+                    activeDeleteFilm();
+                    fetch('http://localhost:8000/php/backAdmin.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8'
+                        },
+                        body: JSON.stringify(['films', confStepMovies.innerHTML])
+                    }).then(res => console.log(res.ok));
+                    fetch('http://localhost:8001/php/film.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                }
+            });
+        };
+        img.onerror = function () {
+            alert('Не установлено изображение');
+        };
+    } else {
+        alert('Такое время нельзя ставить!');
+    }
 
 
 });
@@ -262,11 +265,11 @@ seanceForm.addEventListener('submit', (e) => {
                 });
                 if (!timeOk) {
                     nameSean.remove();
-                    alert('Сеанс накладывается на другой сеанс!');   
-                } 
+                    alert('Сеанс накладывается на другой сеанс!');
+                }
                 createBackgroundColor(el.querySelectorAll('.conf-step__seances-movie-title'));
                 activeDeleteSeance(el.children[1].children);
-                
+
             } else {
                 alert('В этом зале уже есть такое время!');
             }

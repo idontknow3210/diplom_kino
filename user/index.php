@@ -62,7 +62,7 @@ echo '<!DOCTYPE html>
 
 <body>
   <header class="page-header">
-    <h1 class="page-header__title">Идём<span>в</span>кино</h1>
+    <h1 onclick="window.location.reload()" class="page-header__title">Идём<span>в</span>кино</h1>
   </header>
   
   <nav class="page-nav">

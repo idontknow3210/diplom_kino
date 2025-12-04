@@ -5,7 +5,7 @@ buttonConfChair.addEventListener('click', () => {
     console.log('one');
     Array.from(configurationsHallsPrice[0].children).forEach(el => {
 
-        if (el.querySelector('.conf-step__radio').checked && confStepHall.children[0] !== undefined) {
+        if (el.querySelector('.conf-step__radio').checked && confStepHall.children[0] !== undefined && confStepHall.children[0].children[0] !== undefined) {
             const numberHall = ['chairs', el.querySelector('.conf-step__radio').value, typechairs];
             fetch('http://localhost:8001/php/back.php', {
                 method: 'POST',
