@@ -242,7 +242,7 @@ seanceForm.addEventListener('submit', (e) => {
                         const nextEl = nameS.nextElementSibling;
                         let elTime = null;
                         let previousElTime = null;
-                        if (previousEl !== null && nextEl !== null || previousEl !== null || nextEl !== null) {
+                        if (previousEl !== null && nextEl !== null || previousEl !== null || nextEl !== null || previousEl === null && nextEl === null) {
                             Array.from(confStepMovies.children).forEach(movie => {
                                 if (seanceInput[1] === movie.children[1].textContent) {
                                     elTime = movie.children[2].textContent;
