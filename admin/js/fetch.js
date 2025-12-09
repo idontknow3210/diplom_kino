@@ -44,7 +44,7 @@ buttonConfPrice.addEventListener('click', () => {
     let numberPriceHall = null;
     let arrPrice = new PriceHall(confStepAll[2].querySelector('.conf-step__chair_vip').previousElementSibling.children[0].value, confStepAll[2].querySelector('.conf-step__chair_standart').previousElementSibling.children[0].value);
     Array.from(configurationsHallsPrice[1].children).forEach(el => {
-        if (el.querySelector('.conf-step__radio').checked && +arrPrice[0] > 0 && +arrPrice[1] > 0) {
+        if (el.querySelector('.conf-step__radio').checked && +arrPrice['standart'] > 0 && +arrPrice['vip'] > 0) {
             numberPriceHall = el.querySelector('.conf-step__radio').value;
             priceHalls = ['price', numberPriceHall, arrPrice];
         } else {
