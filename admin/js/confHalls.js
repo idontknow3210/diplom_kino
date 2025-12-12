@@ -43,8 +43,12 @@ function restartFor() {
     confStepRow.forEach((el) => {
         Array.from(el.children).forEach((e) => {
             e.addEventListener('click', function idontknow() {
+                
                 e.classList.remove('conf-step__chair_standart', 'conf-step__chair_vip', 'conf-step__chair_disabled');
                 e.classList.add(type);
+                if(type===null) {
+                    e.classList.add('conf-step__chair_standart');
+                }
             });
         });
     });
