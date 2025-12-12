@@ -27,7 +27,25 @@ function chairsReloadAll() {
       const params = new URLSearchParams({ hall: el.querySelector('.conf-step__radio').value }).toString();
       fetch(`http://localhost:8000/php/backAdmin.php?${params}`).then(response => response.text()).then(data => {
         confStepHall.innerHTML = data;
+        console.log(data)
         restartFor();
+        let places = { r: 0, ch: 0 };
+        Array.from(confStepHall.children).forEach(_e => places.r++);
+        Array.from(confStepHall.children[0].children).forEach(_e => places.ch++);
+        confStepHall.parentElement.parentElement.querySelector('#rows').placeholder = places.r;
+        confStepHall.parentElement.parentElement.querySelector('#chairs').placeholder = places.ch;
+      });
+    });
+  });
+  Array.from(configurationsHallsPrice[1].children).forEach(el => {
+    el.addEventListener('click', () => {
+      const params = new URLSearchParams({ hallP: el.querySelector('.conf-step__radio').value }).toString();
+      fetch(`http://localhost:8000/php/backAdmin.php?${params}`).then(response => response.json()).then(data => {
+        const getData = JSON.parse(JSON.stringify(data));
+        const input = configurationsHallsPrice[1].parentElement.parentElement.parentElement.querySelectorAll('.conf-step__input');
+        input[2].placeholder = getData['standart'];
+        input[3].placeholder = getData['vip'];
+        console
       });
     });
   });

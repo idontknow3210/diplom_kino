@@ -12,6 +12,9 @@ if('halls'===$html[0]) {
 } else if(isset($_GET['hall'])) {
     $way = mb_substr($_GET['hall'], -1);
     echo json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\JSON\halls\chairsHall' . $way . '.json'));
+} else if (isset($_GET['hallP'])) {
+    $way = mb_substr($_GET['hallP'], -1);
+    echo file_get_contents($_SERVER['DOCUMENT_ROOT'] . '\JSON\price\priceHall' . $way . '.json');
 } else if (isset($_FILES['file'])) {
     move_uploaded_file($_FILES['file']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/i/posters/' . $_FILES['file']['name']);
 } else if ('films'===$html[0] || 'removefilms'===$html[0]) {
@@ -24,4 +27,7 @@ if('halls'===$html[0]) {
 } else if ($html[0]==='chairs') {  
     $way = mb_substr($html[1], -1);
     file_put_contents($_SERVER['DOCUMENT_ROOT'] . '\JSON\halls\chairsHall' . $way . '.json', json_encode($html[2]));
+} else if($html[0]==='price') {
+    $way = mb_substr($html[1], -1);
+    file_put_contents($_SERVER['DOCUMENT_ROOT'] . '\JSON\price\priceHall' . $way . '.json', json_encode($html[2]));
 }

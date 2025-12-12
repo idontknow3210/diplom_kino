@@ -60,6 +60,13 @@ buttonConfPrice.addEventListener('click', () => {
             body: JSON.stringify(priceHalls)
         }).then(response => {
             if (response.ok) {
+                fetch('http://localhost:8000/php/backAdmin.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(priceHalls)
+                });
                 buttonConfPrice.nextElementSibling.textContent = numberPriceHall + ': цены изменены!';
             }
         });

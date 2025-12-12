@@ -232,9 +232,9 @@ echo '<!DOCTYPE html>
         <ul class="conf-step__selectors-box">' . $hallsSection . '</ul>
         <p class="conf-step__paragraph">Укажите количество рядов и максимальное количество кресел в ряду:</p>
         <div class="conf-step__legend">
-          <label class="conf-step__label">Рядов, шт<input type="text" class="conf-step__input" id="rows" placeholder="10" ></label>
+          <label class="conf-step__label">Рядов, шт<input type="text" class="conf-step__input" id="rows" placeholder="0" ></label>
           <span class="multiplier">x</span>
-          <label class="conf-step__label">Мест, шт<input type="text" class="conf-step__input" id="chairs" placeholder="8" ></label>
+          <label class="conf-step__label">Мест, шт<input type="text" class="conf-step__input" id="chairs" placeholder="0" ></label>
         </div>
         <p class="conf-step__paragraph">Выберите любой тип кресла:</p>
         <div class="conf-step__legend">
